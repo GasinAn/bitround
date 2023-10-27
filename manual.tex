@@ -11,7 +11,7 @@
 %\usepackage{syntonly}
 %\usepackage{textcomp}
 \usepackage{ulem}
-%\usepackage{verbatim}
+\usepackage{verbatim}
 %\syntaxonly
 %\geometry{a5paper}
 \hyphenation{}
@@ -41,5 +41,13 @@
         \item If $E=2047$ and $T=0$, the value is $(-1)^S\times(+\infty)$.
         \item If $E=2047$ and $T\neq0$, the value is $\text{sNaN}$ when the 1st bit of $T$ is $0$, and $\text{qNaN}$ when the 1st bit of $T$ is $1$.
     \end{itemize}
+
+    \section{Behaviors of Shift Operators in C}
+
+    \verb|a << b| causes the bits in \verb|a| to be shifted to the left by the number of positions specified by \verb|b|, and the bit positions that have been vacated by the shift operation are filled by \verb|0|.
+
+    \verb|a >> b| causes the bits in \verb|a| to be shifted to the right by the number of positions specified by \verb|b|. For unsigned numbers, the bit positions that have been vacated by the shift operation are filled by \verb|0|. For signed numbers, the sign bit is used to fill the vacated bit positions. In other words, if \verb|a| is positive, \verb|0| is used, and if \verb|a| is negative, \verb|1| is used.
+
+    In both \verb|a << b| and \verb|a >> b|, \verb|b| should be non-negative and less than the number of bits in \verb|a|.
 
 \end{document}
