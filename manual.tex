@@ -1,0 +1,45 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath}
+%\usepackage{amssymb}
+%\usepackage{amsthm}
+%\usepackage{color}
+%\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{hyperref}
+%\usepackage{marginnote}
+%\usepackage{mathrsfs}
+%\usepackage{syntonly}
+%\usepackage{textcomp}
+\usepackage{ulem}
+%\usepackage{verbatim}
+%\syntaxonly
+%\geometry{a5paper}
+\hyphenation{}
+\normalem
+\hypersetup{
+    colorlinks,
+    linkcolor=blue,
+    filecolor=pink,
+    urlcolor=cyan,
+    citecolor=red,
+}
+\title{bitround Manual}
+\author{GasinAn}
+\begin{document}
+
+    \maketitle
+
+    \tableofcontents
+
+    \section{The Format of float64}
+
+    Let us define $r(s,e,m)=(-1)^s\times2^e\times m$. The format of float64 has three parts: 1 bit $S$, 11 bits $E$, and 52 bits $T$.
+    \begin{itemize}
+        \item If $E=0$ and $T=0$, the value is $(-1)^S\times(+0)$.
+        \item If $E=0$ and $T\neq0$, the value is $r(S,-1022,0.T)$.
+        \item If $1\leq E\leq2046$, the value is $r(S,E-1023,1.T)$.
+        \item If $E=2047$ and $T=0$, the value is $(-1)^S\times(+\infty)$.
+        \item If $E=2047$ and $T\neq0$, the value is $\text{sNaN}$ when the 1st bit of $T$ is $0$, and $\text{qNaN}$ when the 1st bit of $T$ is $1$.
+    \end{itemize}
+
+\end{document}
