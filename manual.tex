@@ -1,6 +1,6 @@
 \documentclass[a4paper,12pt]{article}
 \usepackage{amsmath}
-%\usepackage{amssymb}
+\usepackage{amssymb}
 %\usepackage{amsthm}
 %\usepackage{color}
 %\usepackage{graphicx}
@@ -30,6 +30,10 @@
     \maketitle
 
     \tableofcontents
+
+    \section{Overview}
+
+    The input of ``bit round'' is $r$ and $d$, where $d\in(0,\infty)$. For $r\in(0,\infty)$, The output $f(r,d)=\max\{\bar{r}:\bar{r}\leq r+p/2\}$, where $p=\max\{\tilde{p}:\tilde{p}=2^n\leq d,n\in\mathbb{N}\}$. For $r\in(0,\infty)$, The output $f(r,d)=-f(-r,d)$. For $r$ in other situations (including $r$ is $\pm\infty$ or $\text{NaN}$), $f(r,d)=r$.
 
     \section{The Format of float64}
 
