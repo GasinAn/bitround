@@ -39,9 +39,9 @@ float64 test_bitround(float64 r, float64 d){
 }
 
 int test(){
-    float64 r_list[4] = {1.875, 1.125, -1.875, -1.125};
+    float64 r_list[6] = {1.875, 1.125, 0.0, -1.875, -1.125, -0.0};
     float64 d_list[7] = {0.0625, 0.125, 0.25, 0.5, 1.0, 2.0, 4.0};
-    for (int i=0; i<4; i++)
+    for (int i=0; i<6; i++)
     {
         for (int j=0; j<7; j++)
         {
