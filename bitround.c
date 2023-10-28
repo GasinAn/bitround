@@ -39,40 +39,23 @@ int test_const(){
     return 0;
 }
 
-int main(){
+int test(){
     test_const();
     printf("\n");
-    printf("%11.5f\n", bitround(1.875, 0.0625));
-    printf("%11.5f\n", bitround(1.875, 0.125));
-    printf("%11.5f\n", bitround(1.875, 0.25));
-    printf("%11.5f\n", bitround(1.875, 0.5));
-    printf("%11.5f\n", bitround(1.875, 1.0));
-    printf("%11.5f\n", bitround(1.875, 2.0));
-    printf("%11.5f\n", bitround(1.875, 4.0));
-    printf("\n");
-    printf("%11.5f\n", bitround(1.125, 0.0625));
-    printf("%11.5f\n", bitround(1.125, 0.125));
-    printf("%11.5f\n", bitround(1.125, 0.25));
-    printf("%11.5f\n", bitround(1.125, 0.5));
-    printf("%11.5f\n", bitround(1.125, 1.0));
-    printf("%11.5f\n", bitround(1.125, 2.0));
-    printf("%11.5f\n", bitround(1.125, 4.0));
-    printf("\n");
-    printf("%11.5f\n", bitround(-1.875, 0.0625));
-    printf("%11.5f\n", bitround(-1.875, 0.125));
-    printf("%11.5f\n", bitround(-1.875, 0.25));
-    printf("%11.5f\n", bitround(-1.875, 0.5));
-    printf("%11.5f\n", bitround(-1.875, 1.0));
-    printf("%11.5f\n", bitround(-1.875, 2.0));
-    printf("%11.5f\n", bitround(-1.875, 4.0));
-    printf("\n");
-    printf("%11.5f\n", bitround(-1.125, 0.0625));
-    printf("%11.5f\n", bitround(-1.125, 0.125));
-    printf("%11.5f\n", bitround(-1.125, 0.25));
-    printf("%11.5f\n", bitround(-1.125, 0.5));
-    printf("%11.5f\n", bitround(-1.125, 1.0));
-    printf("%11.5f\n", bitround(-1.125, 2.0));
-    printf("%11.5f\n", bitround(-1.125, 4.0));
-    printf("\n");
+    float32 r_list[4] = {1.875, 1.125, -1.875, -1.125};
+    float32 d_list[7] = {0.0625, 0.125, 0.25, 0.5, 1.0, 2.0, 4.0};
+    for (int i=0; i<4; i++)
+    {
+        for (int j=0; j<7; j++)
+        {
+            printf("%f\n", bitround(r_list[i], d_list[j]));
+        }
+        printf("\n");
+    }
+    return 0;
+}
+
+int main(){
+    test();
     return 0;
 }
