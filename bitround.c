@@ -26,15 +26,28 @@ float64 bitround(float64 r, float64 d){
     return *((float64*) &output);
 }
 
+float64 test_bitround(float64 r, float64 d){
+    if (isnan(r) || isinf(r) || (r == 0.0)){return r;}
+    uint64 p = *((uint64*) &d) & HEX_FFF00s;
+    float64 sgn_r = ((r > 0) - 0.5) * 2;
+    float64 abs_r = r / sgn_r;
+    for (int i=0; 1; i++){
+        if (((i + 1) * *((float64*) &p)) > (abs_r + *((float64*) &p) / 2)){
+            return sgn_r * i * *((float64*) &p);
+        }
+    }
+}
+
 int test(){
-    printf("\n");
     float64 r_list[4] = {1.875, 1.125, -1.875, -1.125};
     float64 d_list[7] = {0.0625, 0.125, 0.25, 0.5, 1.0, 2.0, 4.0};
     for (int i=0; i<4; i++)
     {
         for (int j=0; j<7; j++)
         {
-            printf("%f\n", bitround(r_list[i], d_list[j]));
+            float64 output = bitround(r_list[i], d_list[j]);
+            float64 correct_output = test_bitround(r_list[i], d_list[j]);
+            printf("%d", (output == correct_output));
         }
         printf("\n");
     }
