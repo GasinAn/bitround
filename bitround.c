@@ -18,11 +18,16 @@ float64 bitround(float64 r, float64 d){
     int64 E_d = *p_d & HEX_7FF00s;
     int64 dE = (E_r - E_d) >> 52;
 
-    uint64 output = \
+    uint64 output;
+    output = \
         (dE > -1) * ((*p_r + (HEX_00080s >> dE)) & (HEX_FFF00s >> dE))\
-                  + \
-        (dE == -1) * ((*p_r & HEX_80000s) | E_d);
-
+        + \
+        (dE <= -1) * ((*p_r & HEX_80000s) | ((dE == -1) * E_d));
+    output = \
+        (E_r != HEX_7FF00s) * output\
+        + \
+        (E_r == HEX_7FF00s) * *p_r;
+    
     return *((float64*) &output);
 }
 
@@ -39,19 +44,29 @@ float64 test_bitround(float64 r, float64 d){
 }
 
 int test(){
-    float64 r_list[4] = {1.875, 1.125, -1.875, -1.125};
     float64 d_list[7] = {0.0625, 0.125, 0.25, 0.5, 1.0, 2.0, 4.0};
-    for (int i=0; i<4; i++)
-    {
-        for (int j=0; j<7; j++)
-        {
+
+    float64 r_list[6] = {1.875, 1.125, 0.0, -1.875, -1.125, -0.0};
+    for (int i=0; i<6; i++){
+        for (int j=0; j<7; j++){
             float64 output = bitround(r_list[i], d_list[j]);
             float64 correct_output = test_bitround(r_list[i], d_list[j]);
-            printf("%d", (output == correct_output));
+            int correct = *((uint64*) &output) == *((uint64*) &correct_output);
+            printf("%d", correct);
         }
         printf("\n");
     }
-    return 0;
+
+    float64 inf_nan_list[4] = {INFINITY, NAN, -INFINITY, -NAN};
+    for (int i=0; i<4; i++){
+        for (int j=0; j<7; j++){
+            float64 output = bitround(inf_nan_list[i], d_list[j]);
+            float64 correct_output = test_bitround(inf_nan_list[i], d_list[j]);
+            int correct = *((uint64*) &output) == *((uint64*) &correct_output);
+            printf("%d", correct);
+        }
+        printf("\n");
+    }
 }
 
 int main(){
