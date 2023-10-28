@@ -1,13 +1,13 @@
 #include <math.h>
 #include <stdio.h>
 
-#define HEX_00080s 2251799813685248L
-#define HEX_7FF00s 9218868437227405312L
-#define HEX_80000s -9223372036854775808L
-#define HEX_FFF00s -4503599627370496L
+#define HEX_00080s 2251799813685248LL
+#define HEX_7FF00s 9218868437227405312LL
+#define HEX_80000s -9223372036854775808LL
+#define HEX_FFF00s -4503599627370496LL
 
-typedef long int64;
-typedef unsigned long uint64;
+typedef long long int64;
+typedef unsigned long long uint64;
 typedef double float64;
 
 float64 bitround(float64 r, float64 d){
