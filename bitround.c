@@ -5,10 +5,10 @@ typedef long long int64;
 typedef unsigned long long uint64;
 typedef double float64;
 
-const int64 HEX_00080s = 2251799813685248LL;
-const int64 HEX_7FF00s = 9218868437227405312LL;
-const int64 HEX_80000s = -9223372036854775808LL;
-const int64 HEX_FFF00s = -4503599627370496LL;
+const int64 HEX_00080s = 1LL << 51;
+const int64 HEX_7FF00s = ((1LL << 11) - 1) << 52;
+const int64 HEX_80000s = 1LL << 63;
+const int64 HEX_FFF00s = ((1LL << 12) - 1) << 52;
 
 float64 bitround(float64 r, float64 d){
     uint64* p_r = (uint64*) &r;
@@ -26,21 +26,7 @@ float64 bitround(float64 r, float64 d){
     return *((float64*) &output);
 }
 
-int test_const(){
-    uint64 c;
-    c = 0x0008000000000000;
-    printf("%f\n", (float64) *((int64*) &c));
-    c = 0x7FF0000000000000;
-    printf("%f\n", (float64) *((int64*) &c));
-    c = 0x8000000000000000;
-    printf("%f\n", (float64) *((int64*) &c));
-    c = 0xFFF0000000000000;
-    printf("%f\n", (float64) *((int64*) &c));
-    return 0;
-}
-
 int test(){
-    test_const();
     printf("\n");
     float64 r_list[4] = {1.875, 1.125, -1.875, -1.125};
     float64 d_list[7] = {0.0625, 0.125, 0.25, 0.5, 1.0, 2.0, 4.0};
