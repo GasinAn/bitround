@@ -27,15 +27,15 @@ float32 bitround(float32 r, float32 d){
 }
 
 int test_const(){
-    int32 c;
-    c = HEX_00400000;
-    printf("%8x\n", *((uint32*) &c));
-    c = HEX_7F800000;
-    printf("%8x\n", *((uint32*) &c));
-    c = HEX_80000000;
-    printf("%8x\n", *((uint32*) &c));
-    c = HEX_FF800000;
-    printf("%8x\n", *((uint32*) &c));
+    uint32 c;
+    c = 0x00400000;
+    printf("%d\n", *((int32*) &c));
+    c = 0x7F800000;
+    printf("%d\n", *((int32*) &c));
+    c = 0x80000000;
+    printf("%d\n", *((int32*) &c));
+    c = 0xFF800000;
+    printf("%d\n", *((int32*) &c));
     return 0;
 }
 
