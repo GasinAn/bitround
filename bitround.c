@@ -21,7 +21,7 @@ float64 bitround(float64 r, float64 d){
     uint64 output = \
         (dE > -1) * ((*p_r + (HEX_00080s >> dE)) & (HEX_FFF00s >> dE))\
                   + \
-        (dE <= -1) * ((*p_r & HEX_80000s) | (dE == -1) * E_d);
+        (dE <= -1) * ((*p_r & HEX_80000s) | ((dE == -1) * E_d));
 
     return *((float64*) &output);
 }
@@ -41,10 +41,8 @@ float64 test_bitround(float64 r, float64 d){
 int test(){
     float64 r_list[6] = {1.875, 1.125, 0.0, -1.875, -1.125, -0.0};
     float64 d_list[7] = {0.0625, 0.125, 0.25, 0.5, 1.0, 2.0, 4.0};
-    for (int i=0; i<6; i++)
-    {
-        for (int j=0; j<7; j++)
-        {
+    for (int i=0; i<6; i++){
+        for (int j=0; j<7; j++){
             float64 output = bitround(r_list[i], d_list[j]);
             float64 correct_output = test_bitround(r_list[i], d_list[j]);
             int correct = *((uint64*) &output) == *((uint64*) &correct_output);
@@ -52,7 +50,6 @@ int test(){
         }
         printf("\n");
     }
-    return 0;
 }
 
 int main(){
