@@ -7,10 +7,11 @@
 
 /*** npy_double_bitround ***/
 
-const npy_int64 HEX_00080s = 1LL << 51;
-const npy_int64 HEX_7FF00s = ((1LL << 11) - 1) << 52;
-const npy_int64 HEX_80000s = 1LL << 63;
-const npy_int64 HEX_FFF00s = ((1LL << 12) - 1) << 52;
+const npy_int64 ONE = 1;
+const npy_int64 HEX_00080s = ONE << 51;
+const npy_int64 HEX_7FF00s = ((ONE << 11) - 1) << 52;
+const npy_int64 HEX_80000s = ONE << 63;
+const npy_int64 HEX_FFF00s = ((ONE << 12) - 1) << 52;
 
 npy_double npy_double_bitround(npy_double r, npy_double d){
     npy_uint64* p_r = (npy_uint64*) &r;
