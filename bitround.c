@@ -4,14 +4,15 @@
 #include "numpy/ufuncobject.h"
 #include "numpy/npy_math.h"
 
-/******************************************************************************/
+
+/*** npy_double_bitround ***/
 
 const npy_int64 HEX_00080s = 1LL << 51;
 const npy_int64 HEX_7FF00s = ((1LL << 11) - 1) << 52;
 const npy_int64 HEX_80000s = 1LL << 63;
 const npy_int64 HEX_FFF00s = ((1LL << 12) - 1) << 52;
 
-npy_double bitround(npy_double r, npy_double d){
+npy_double npy_double_bitround(npy_double r, npy_double d){
     npy_uint64* p_r = (npy_uint64*) &r;
     npy_uint64* p_d = (npy_uint64*) &d;
 
@@ -32,16 +33,13 @@ npy_double bitround(npy_double r, npy_double d){
     return *((npy_double*) &output);
 }
 
-/******************************************************************************/
 
-static PyMethodDef BitroundMethods[] = {
-        {NULL, NULL, 0, NULL}
-};
+/*** Make ufunc bitround. ***/
 
 /* The loop definition must precede the PyMODINIT_FUNC. */
 
-static void npy_double_bitround(char **args, npy_intp *dimensions,
-                                npy_intp* steps, void* data)
+static void u_npy_double_bitround(char **args, npy_intp *dimensions,
+                                  npy_intp* steps, void* data)
 {
     npy_intp i;
     npy_intp n = dimensions[0];
@@ -52,7 +50,7 @@ static void npy_double_bitround(char **args, npy_intp *dimensions,
 
     for (i = 0; i < n; i++) {
         /*BEGIN main ufunc computation*/
-        *((npy_double *)out1) = bitround(
+        *((npy_double *)out1) = npy_double_bitround(
             *(npy_double *)in1, *(npy_double *)in2
         );
         /*END main ufunc computation*/
@@ -63,16 +61,23 @@ static void npy_double_bitround(char **args, npy_intp *dimensions,
     }
 }
 
-/*This a pointer to the above function*/
+/* This a pointer to the above function. */
 
-PyUFuncGenericFunction funcs_bitround[1] = {&npy_double_bitround};
+PyUFuncGenericFunction funcs_bitround[1] = {&u_npy_double_bitround};
 
-/* These are the input and return dtypes of logit.*/
+/* These are the input and output dtypes of bitround. */
 
 static char types_bitround[3] = {NPY_FLOAT64, NPY_FLOAT64,
                                  NPY_FLOAT64};
 
 static void *data_bitround[1] = {NULL};
+
+
+/*** Init module bitround. ***/
+
+static PyMethodDef BitroundMethods[] = {
+        {NULL, NULL, 0, NULL}
+};
 
 #if PY_VERSION_HEX >= 0x03000000
 static struct PyModuleDef moduledef = {
