@@ -10,8 +10,8 @@ static PyMethodDef BitroundMethods[] = {
 
 /* The loop definition must precede the PyMODINIT_FUNC. */
 
-static void double_bitround(char **args, npy_intp *dimensions,
-                            npy_intp* steps, void* data)
+static void npy_double_bitround(char **args, npy_intp *dimensions,
+                                npy_intp* steps, void* data)
 {
     npy_intp i;
     npy_intp n = dimensions[0];
@@ -20,13 +20,13 @@ static void double_bitround(char **args, npy_intp *dimensions,
     npy_intp in1_step = steps[0], in2_step = steps[1];
     npy_intp out1_step = steps[2];
 
-    double tmp;
+    npy_double tmp;
 
     for (i = 0; i < n; i++) {
         /*BEGIN main ufunc computation*/
-        tmp = *(double *)in1;
-        tmp *= *(double *)in2;
-        *((double *)out1) = log(tmp/(1-tmp));
+        tmp = *(npy_double *)in1;
+        tmp *= *(npy_double *)in2;
+        *((npy_double *)out1) = log(tmp/(1-tmp));
         /*END main ufunc computation*/
 
         in1 += in1_step;
@@ -37,19 +37,19 @@ static void double_bitround(char **args, npy_intp *dimensions,
 
 /*This a pointer to the above function*/
 
-PyUFuncGenericFunction funcs_bitround[1] = {&double_bitround};
+PyUFuncGenericFunction funcs_bitround[1] = {&npy_double_bitround};
 
 /* These are the input and return dtypes of logit.*/
 
-static char types_bitround[3] = {NPY_DOUBLE, NPY_DOUBLE,
-                                 NPY_DOUBLE};
+static char types_bitround[3] = {NPY_FLOAT64, NPY_FLOAT64,
+                                 NPY_FLOAT64};
 
 static void *data_bitround[1] = {NULL};
 
 /* The loop definition must precede the PyMODINIT_FUNC. */
 
-static void double_test_bitround(char **args, npy_intp *dimensions,
-                                 npy_intp* steps, void* data)
+static void npy_double_test_bitround(char **args, npy_intp *dimensions,
+                                     npy_intp* steps, void* data)
 {
     npy_intp i;
     npy_intp n = dimensions[0];
@@ -58,13 +58,13 @@ static void double_test_bitround(char **args, npy_intp *dimensions,
     npy_intp in1_step = steps[0], in2_step = steps[1];
     npy_intp out1_step = steps[2];
 
-    double tmp;
+    npy_double tmp;
 
     for (i = 0; i < n; i++) {
         /*BEGIN main ufunc computation*/
-        tmp = *(double *)in1;
-        tmp *= *(double *)in2;
-        *((double *)out1) = log(tmp/(1-tmp));
+        tmp = *(npy_double *)in1;
+        tmp *= *(npy_double *)in2;
+        *((npy_double *)out1) = log(tmp/(1-tmp));
         /*END main ufunc computation*/
 
         in1 += in1_step;
@@ -75,12 +75,12 @@ static void double_test_bitround(char **args, npy_intp *dimensions,
 
 /*This a pointer to the above function*/
 
-PyUFuncGenericFunction funcs_test_bitround[1] = {&double_test_bitround};
+PyUFuncGenericFunction funcs_test_bitround[1] = {&npy_double_test_bitround};
 
 /* These are the input and return dtypes of logit.*/
 
-static char types_test_bitround[3] = {NPY_DOUBLE, NPY_DOUBLE,
-                                      NPY_DOUBLE};
+static char types_test_bitround[3] = {NPY_FLOAT64, NPY_FLOAT64,
+                                      NPY_FLOAT64};
 
 static void *data_test_bitround[1] = {NULL};
 
