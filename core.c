@@ -1,3 +1,4 @@
+#define PY_SSIZE_T_CLEAN
 #include "Python.h"
 #include "math.h"
 #include "numpy/ndarraytypes.h"
@@ -80,11 +81,10 @@ static PyMethodDef CoreMethods[] = {
         {NULL, NULL, 0, NULL}
 };
 
-#if PY_VERSION_HEX >= 0x03000000
 static struct PyModuleDef moduledef = {
     PyModuleDef_HEAD_INIT,
     "core",
-    NULL,
+    "core_docstring",
     -1,
     CoreMethods,
     NULL,
@@ -97,7 +97,7 @@ PyMODINIT_FUNC PyInit_core(void)
     PyObject *m, *bitround, *d;
 
     m = PyModule_Create(&moduledef);
-    if (!m) {
+    if (m == NULL) {
         return NULL;
     }
 
@@ -116,27 +116,3 @@ PyMODINIT_FUNC PyInit_core(void)
 
     return m;
 }
-#else
-PyMODINIT_FUNC initcore(void)
-{
-    PyObject *m, *bitround, *d;
-
-    m = Py_InitModule("core", CoreMethods);
-    if (m == NULL) {
-        return;
-    }
-
-    import_array();
-    import_umath();
-
-    bitround = PyUFunc_FromFuncAndData(
-        funcs_bitround, data_bitround, types_bitround,
-        1, 2, 1, PyUFunc_None, "bitround", "bitround_docstring", 0
-    );
-
-    d = PyModule_GetDict(m);
-
-    PyDict_SetItemString(d, "bitround", bitround);
-    Py_DECREF(bitround);
-}
-#endif
