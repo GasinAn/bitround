@@ -4,7 +4,7 @@ def configuration(parent_package='', top_path=None):
     config = Configuration('.',
                            parent_package,
                            top_path)
-    config.add_extension('bitround', ['bitround.c'])
+    config.add_extension('core', ['core.c'])
 
     return config
 
