@@ -5,7 +5,7 @@ def configuration(parent_package='', top_path=None):
     config = Configuration('.',
                            parent_package,
                            top_path)
-    config.add_extension('bitround', ['numpy_example.c'])
+    config.add_extension('bitround', ['bitround.c'])
 
     return config
 
