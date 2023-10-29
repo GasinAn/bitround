@@ -4,6 +4,48 @@
 #include "numpy/ufuncobject.h"
 #include "numpy/npy_math.h"
 
+/******************************************************************************/
+
+const npy_int64 HEX_00080s = 1LL << 51;
+const npy_int64 HEX_7FF00s = ((1LL << 11) - 1) << 52;
+const npy_int64 HEX_80000s = 1LL << 63;
+const npy_int64 HEX_FFF00s = ((1LL << 12) - 1) << 52;
+
+npy_double bitround(npy_double r, npy_double d){
+    npy_uint64* p_r = (npy_uint64*) &r;
+    npy_uint64* p_d = (npy_uint64*) &d;
+
+    npy_int64 E_r = *p_r & HEX_7FF00s;
+    npy_int64 E_d = *p_d & HEX_7FF00s;
+    npy_int64 dE = (E_r - E_d) >> 52;
+
+    npy_uint64 output;
+    output = \
+        (dE > -1) * ((*p_r + (HEX_00080s >> dE)) & (HEX_FFF00s >> dE))\
+        + \
+        (dE <= -1) * ((*p_r & HEX_80000s) | ((dE == -1) * E_d));
+    output = \
+        (E_r != HEX_7FF00s) * output\
+        + \
+        (E_r == HEX_7FF00s) * *p_r;
+
+    return *((npy_double*) &output);
+}
+
+npy_double test_bitround(npy_double r, npy_double d){
+    if (isnan(r) || isinf(r) || (r == 0.0)){return r;}
+    npy_uint64 p = *((npy_uint64*) &d) & HEX_FFF00s;
+    npy_double sgn_r = ((r > 0) - 0.5) * 2;
+    npy_double abs_r = r / sgn_r;
+    for (int i=0; 1; i++){
+        if (((i + 1) * *((npy_double*) &p)) > (abs_r + *((npy_double*) &p) / 2)){
+            return sgn_r * i * *((npy_double*) &p);
+        }
+    }
+}
+
+/******************************************************************************/
+
 static PyMethodDef BitroundMethods[] = {
         {NULL, NULL, 0, NULL}
 };
@@ -20,13 +62,11 @@ static void npy_double_bitround(char **args, npy_intp *dimensions,
     npy_intp in1_step = steps[0], in2_step = steps[1];
     npy_intp out1_step = steps[2];
 
-    npy_double tmp;
-
     for (i = 0; i < n; i++) {
         /*BEGIN main ufunc computation*/
-        tmp = *(npy_double *)in1;
-        tmp *= *(npy_double *)in2;
-        *((npy_double *)out1) = log(tmp/(1-tmp));
+        *((npy_double *)out1) = bitround(
+            *(npy_double *)in1, *(npy_double *)in2
+        );
         /*END main ufunc computation*/
 
         in1 += in1_step;
@@ -58,13 +98,11 @@ static void npy_double_test_bitround(char **args, npy_intp *dimensions,
     npy_intp in1_step = steps[0], in2_step = steps[1];
     npy_intp out1_step = steps[2];
 
-    npy_double tmp;
-
     for (i = 0; i < n; i++) {
         /*BEGIN main ufunc computation*/
-        tmp = *(npy_double *)in1;
-        tmp *= *(npy_double *)in2;
-        *((npy_double *)out1) = log(tmp/(1-tmp));
+        *((npy_double *)out1) = test_bitround(
+            *(npy_double *)in1, *(npy_double *)in2
+        );
         /*END main ufunc computation*/
 
         in1 += in1_step;
