@@ -10,7 +10,7 @@ static PyMethodDef BitroundMethods[] = {
 
 /* The loop definition must precede the PyMODINIT_FUNC. */
 
-static void double_logitprod(char **args, npy_intp *dimensions,
+static void double_bitround(char **args, npy_intp *dimensions,
                             npy_intp* steps, void* data)
 {
     npy_intp i;
@@ -37,19 +37,19 @@ static void double_logitprod(char **args, npy_intp *dimensions,
 
 /*This a pointer to the above function*/
 
-PyUFuncGenericFunction funcs[1] = {&double_logitprod};
+PyUFuncGenericFunction funcs_bitround[1] = {&double_bitround};
 
 /* These are the input and return dtypes of logit.*/
 
-static char types[3] = {NPY_DOUBLE, NPY_DOUBLE,
-                        NPY_DOUBLE};
+static char types_bitround[3] = {NPY_DOUBLE, NPY_DOUBLE,
+                                 NPY_DOUBLE};
 
-static void *data[1] = {NULL};
+static void *data_bitround[1] = {NULL};
 
 /* The loop definition must precede the PyMODINIT_FUNC. */
 
-static void double_logitprod2(char **args, npy_intp *dimensions,
-                            npy_intp* steps, void* data)
+static void double_test_bitround(char **args, npy_intp *dimensions,
+                                 npy_intp* steps, void* data)
 {
     npy_intp i;
     npy_intp n = dimensions[0];
@@ -75,14 +75,14 @@ static void double_logitprod2(char **args, npy_intp *dimensions,
 
 /*This a pointer to the above function*/
 
-PyUFuncGenericFunction funcs2[1] = {&double_logitprod2};
+PyUFuncGenericFunction funcs_test_bitround[1] = {&double_test_bitround};
 
 /* These are the input and return dtypes of logit.*/
 
-static char types2[3] = {NPY_DOUBLE, NPY_DOUBLE,
-                        NPY_DOUBLE};
+static char types_test_bitround[3] = {NPY_DOUBLE, NPY_DOUBLE,
+                                      NPY_DOUBLE};
 
-static void *data2[1] = {NULL};
+static void *data_test_bitround[1] = {NULL};
 
 #if PY_VERSION_HEX >= 0x03000000
 static struct PyModuleDef moduledef = {
@@ -98,7 +98,7 @@ static struct PyModuleDef moduledef = {
 };
 PyMODINIT_FUNC PyInit_bitround(void)
 {
-    PyObject *m, *logit, *logit2, *d;
+    PyObject *m, *bitround, *test_bitround, *d;
 
     m = PyModule_Create(&moduledef);
     if (!m) {
@@ -108,26 +108,28 @@ PyMODINIT_FUNC PyInit_bitround(void)
     import_array();
     import_umath();
 
-    logit = PyUFunc_FromFuncAndData(funcs, data, types, 1, 2, 1,
-                                    PyUFunc_None, "logit",
-                                    "logit_docstring", 0);
-    logit2 = PyUFunc_FromFuncAndData(funcs2, data2, types2, 1, 2, 1,
-                                    PyUFunc_None, "logit2",
-                                    "logit2_docstring", 0);
+    bitround = PyUFunc_FromFuncAndData(
+        funcs_bitround, data_bitround, types_bitround,
+        1, 2, 1, PyUFunc_None, "bitround", "bitround_docstring", 0
+    );
+    test_bitround = PyUFunc_FromFuncAndData(
+        funcs_test_bitround, data_test_bitround, types_test_bitround,
+        1, 2, 1, PyUFunc_None, "test_bitround", "test_bitround_docstring", 0
+    );
 
     d = PyModule_GetDict(m);
 
-    PyDict_SetItemString(d, "logit", logit);
-    Py_DECREF(logit);
-    PyDict_SetItemString(d, "logit2", logit2);
-    Py_DECREF(logit2);
+    PyDict_SetItemString(d, "bitround", bitround);
+    Py_DECREF(bitround);
+    PyDict_SetItemString(d, "test_bitround", test_bitround);
+    Py_DECREF(test_bitround);
 
     return m;
 }
 #else
 PyMODINIT_FUNC initbitround(void)
 {
-    PyObject *m, *logit, *logit2, *d;
+    PyObject *m, *bitround, *test_bitround, *d;
 
     m = Py_InitModule("bitround", BitroundMethods);
     if (m == NULL) {
@@ -137,18 +139,20 @@ PyMODINIT_FUNC initbitround(void)
     import_array();
     import_umath();
 
-    logit = PyUFunc_FromFuncAndData(funcs, data, types, 1, 2, 1,
-                                    PyUFunc_None, "logit",
-                                    "logit_docstring", 0);
-    logit2 = PyUFunc_FromFuncAndData(funcs2, data2, types2, 1, 2, 1,
-                                    PyUFunc_None, "logit2",
-                                    "logit2_docstring", 0);
+    bitround = PyUFunc_FromFuncAndData(
+        funcs_bitround, data_bitround, types_bitround,
+        1, 2, 1, PyUFunc_None, "bitround", "bitround_docstring", 0
+    );
+    test_bitround = PyUFunc_FromFuncAndData(
+        funcs_test_bitround, data_test_bitround, types_test_bitround,
+        1, 2, 1, PyUFunc_None, "test_bitround", "test_bitround_docstring", 0
+    );
 
     d = PyModule_GetDict(m);
 
-    PyDict_SetItemString(d, "logit", logit);
-    Py_DECREF(logit);
-    PyDict_SetItemString(d, "logit2", logit2);
-    Py_DECREF(logit2);
+    PyDict_SetItemString(d, "bitround", bitround);
+    Py_DECREF(bitround);
+    PyDict_SetItemString(d, "test_bitround", test_bitround);
+    Py_DECREF(test_bitround);
 }
 #endif
