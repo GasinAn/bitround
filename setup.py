@@ -1,7 +1,7 @@
-from setuptools import Extension
-from setuptools import setup
+import setuptools
+import numpy
 
-setup(
+setuptools.setup(
     name="bitround",
     version="0.3.0",
     author="GasinAn",
@@ -13,12 +13,13 @@ setup(
     packages=["bitround"],
     package_dir={"bitround": "bitround"},
     ext_modules=[
-        Extension(
+        setuptools.Extension(
             name="bitround.core",
             sources=["bitround/core.c"],
+            include_dirs=[numpy.get_include()],
         )
     ],
     py_modules=["bitround.test"],
     python_requires=">=3.0",
-    install_requires=[],
+    install_requires=["numpy"],
 )
