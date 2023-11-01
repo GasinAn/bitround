@@ -88,6 +88,7 @@ static struct PyModuleDef moduledef = {
     NULL,
     NULL
 };
+
 PyMODINIT_FUNC PyInit_core(void)
 {
     PyObject *m, *bitround, *d;
