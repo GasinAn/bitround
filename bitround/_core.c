@@ -71,25 +71,25 @@ static char types_bitround[3] = {NPY_FLOAT64, NPY_FLOAT64,
 static void *data_bitround[1] = {NULL};
 
 
-/*** Init module bitround.core. ***/
+/*** Init module bitround._core. ***/
 
-static PyMethodDef CoreMethods[] = {
+static PyMethodDef _CoreMethods[] = {
         {NULL, NULL, 0, NULL}
 };
 
 static struct PyModuleDef moduledef = {
     PyModuleDef_HEAD_INIT,
-    "core",
-    "core_docstring",
+    "_core",
+    "_core_docstring",
     -1,
-    CoreMethods,
+    _CoreMethods,
     NULL,
     NULL,
     NULL,
     NULL
 };
 
-PyMODINIT_FUNC PyInit_core(void)
+PyMODINIT_FUNC PyInit__core(void)
 {
     PyObject *m, *bitround, *d;
 

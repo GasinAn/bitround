@@ -1,4 +1,4 @@
-from .core import bitround
-from .test import test
+from ._core import bitround
+from ._test import test
 
-__all__ = ["bitround", "test"]
+__all__ = ['bitround', 'test']
