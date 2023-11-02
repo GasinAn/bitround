@@ -3,7 +3,7 @@ import numpy
 
 setuptools.setup(
     name='bitround',
-    version='0.3.0',
+    version='0.3.1',
     description='"Bit round" for fast lossy compression',
     author='GasinAn',
     author_email='Gasin185@163.com',
