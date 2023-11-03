@@ -9,24 +9,26 @@
 /*** npy_double_bitround ***/
 
 const npy_int64 ONE = 1;
-const npy_int64 HEX_00080s = ONE << (52 - 1);
+const npy_int64 HEX_00100s = ONE << 52;
 const npy_int64 HEX_7FF00s = ((ONE << 11) - 1) << 52;
 const npy_int64 HEX_80000s = ONE << (64 - 1);
+const npy_int64 HEX_FFE00s = ((ONE << 11) - 1) << (52 + 1);
 const npy_int64 HEX_FFF00s = ((ONE << (1 + 11)) - 1) << 52;
 
-inline npy_double npy_double_bitround(npy_double r, npy_double d){
-    npy_uint64* p_r = (npy_uint64*) &r;
+inline npy_double npy_double_bitround(npy_double a, npy_double d){
+    npy_uint64* p_a = (npy_uint64*) &a;
     npy_uint64* p_d = (npy_uint64*) &d;
 
-    npy_int64 E_r = *p_r & HEX_7FF00s;
+    npy_int64 E_a = *p_a & HEX_7FF00s;
     npy_int64 E_d = *p_d & HEX_7FF00s;
-    npy_int64 dE = (E_r - E_d) >> 52;
+    npy_int64 dE = (E_a - E_d) >> 52;
 
     npy_uint64 output;
-    output = (dE > -1) * ((*p_r + (HEX_00080s >> dE)) & (HEX_FFF00s >> dE))
-           + (dE <= -1) * ((*p_r & HEX_80000s) | ((dE == -1) * E_d));
-    output = (E_r != HEX_7FF00s) * output
-           + (E_r == HEX_7FF00s) * *p_r;
+    output = (dE > 0) * ((*p_a + (HEX_00100s >> dE)) & (HEX_FFE00s >> dE))
+           + (dE == 0) * ((*p_a + HEX_00100s) & HEX_FFF00s)
+           + (dE < 0) * (*p_a & HEX_80000s);
+    output = ((E_a != HEX_7FF00s) && (dE < 32))  * output
+           + ((E_a == HEX_7FF00s) || (dE >= 32)) * *p_a;
 
     return *((npy_double*) &output);
 }

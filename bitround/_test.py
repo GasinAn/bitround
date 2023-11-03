@@ -1,3 +1,4 @@
+from ._core import bitround
 from numpy import *
 
 @vectorize
