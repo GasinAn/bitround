@@ -48,7 +48,7 @@ static void u_npy_float64_bitround(char **args,
     for (i = 0; i < n; i++) {
         /*BEGIN main ufunc computation*/
         *((npy_float64 *)in1) = npy_float64_bitround(
-            *(npy_float64 *)in1, *(npy_float64 *)in2
+            *((npy_float64 *)in1), *((npy_float64 *)in2)
         );
         /*END main ufunc computation*/
 
@@ -57,15 +57,13 @@ static void u_npy_float64_bitround(char **args,
     }
 }
 
-/* This a pointer to the above function. */
+/* This gives a pointer to the above function. */
 
 PyUFuncGenericFunction funcs_bitround[1] = {&u_npy_float64_bitround};
 
 /* These are the input and output dtypes of bitround. */
 
 static char types_bitround[2] = {NPY_FLOAT64, NPY_FLOAT64};
-
-static void *data_bitround[1] = {NULL};
 
 
 /*** Init module bitround._core. ***/
@@ -91,16 +89,15 @@ PyMODINIT_FUNC PyInit__core(void)
     PyObject *m, *bitround, *d;
 
     m = PyModule_Create(&moduledef);
-    if (m == NULL) {
+    if (m == NULL)
         return NULL;
-    }
 
     import_array();
     import_umath();
 
     bitround = PyUFunc_FromFuncAndData(
-        funcs_bitround, data_bitround, types_bitround,
-        1, 2, 0, PyUFunc_None, "bitround", "bitround_docstring", 0
+        funcs_bitround, NULL, types_bitround, 1, 2, 0, PyUFunc_None,
+        "bitround", "bitround_docstring", 0
     );
 
     d = PyModule_GetDict(m);
