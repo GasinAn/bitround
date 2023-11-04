@@ -1,9 +1,8 @@
 #define PY_SSIZE_T_CLEAN
-#include "Python.h"
-#include "math.h"
+#define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
+#include <Python.h>
 #include "numpy/ndarraytypes.h"
 #include "numpy/ufuncobject.h"
-#include "numpy/npy_math.h"
 
 
 /*** npy_double_bitround ***/
@@ -38,8 +37,10 @@ inline npy_double npy_double_bitround(npy_double a, npy_double d){
 
 /* The loop definition must precede the PyMODINIT_FUNC. */
 
-static void u_npy_double_bitround(char **args, npy_intp *dimensions,
-                                  npy_intp* steps, void* data)
+static void u_npy_double_bitround(char **args,
+                                  const npy_intp *dimensions,
+                                  const npy_intp *steps,
+                                  void *data)
 {
     npy_intp i;
     npy_intp n = dimensions[0];
