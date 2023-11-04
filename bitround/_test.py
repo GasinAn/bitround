@@ -4,8 +4,8 @@ from numpy import *
 @vectorize
 def _bitround(a, d):
     if (a==0) or isinf(a) or isnan(a): return a
-    n = floor(log2(d))
-    return sign(a)*floor((abs(a)+exp2(n))/exp2(n+1))*exp2(n+1)
+    exp2_n = exp2(ceil(log2(d)))
+    return sign(a)*round(abs(a)/exp2_n)*exp2_n
 
 def test():
     print('func test')
