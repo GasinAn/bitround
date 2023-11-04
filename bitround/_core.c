@@ -43,20 +43,17 @@ static void u_npy_float64_bitround(char **args,
     npy_intp i;
     npy_intp n = dimensions[0];
     char *in1 = args[0], *in2 = args[1];
-    char *out1 = args[2];
     npy_intp in1_step = steps[0], in2_step = steps[1];
-    npy_intp out1_step = steps[2];
 
     for (i = 0; i < n; i++) {
         /*BEGIN main ufunc computation*/
-        *((npy_float64 *)out1) = npy_float64_bitround(
+        *((npy_float64 *)in1) = npy_float64_bitround(
             *(npy_float64 *)in1, *(npy_float64 *)in2
         );
         /*END main ufunc computation*/
 
         in1 += in1_step;
         in2 += in2_step;
-        out1 += out1_step;
     }
 }
 
@@ -66,8 +63,7 @@ PyUFuncGenericFunction funcs_bitround[1] = {&u_npy_float64_bitround};
 
 /* These are the input and output dtypes of bitround. */
 
-static char types_bitround[3] = {NPY_FLOAT64, NPY_FLOAT64,
-                                 NPY_FLOAT64};
+static char types_bitround[2] = {NPY_FLOAT64, NPY_FLOAT64};
 
 static void *data_bitround[1] = {NULL};
 
@@ -104,7 +100,7 @@ PyMODINIT_FUNC PyInit__core(void)
 
     bitround = PyUFunc_FromFuncAndData(
         funcs_bitround, data_bitround, types_bitround,
-        1, 2, 1, PyUFunc_None, "bitround", "bitround_docstring", 0
+        1, 2, 0, PyUFunc_None, "bitround", "bitround_docstring", 0
     );
 
     d = PyModule_GetDict(m);
