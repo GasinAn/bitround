@@ -22,8 +22,9 @@ inline npy_float64 npy_float64_bitround(npy_float64 a, npy_float64 d){
     npy_int64 dE = (E_a - E_d) >> 52;
 
     npy_uint64 output;
-    output = (dE > 0) * ((*p_a + (HEX_00100s >> dE)) & (HEX_FFE00s >> dE))
-           + (dE == 0) * ((*p_a + HEX_00100s) & HEX_FFF00s)
+    output = *p_a + (HEX_00100s >> dE);
+    output = (dE > 0) * (output & (HEX_FFE00s >> dE))
+           + (dE == 0) * (output & HEX_FFF00s);
     output = (dE < 64) * output + (dE >= 64)* *p_a;
 
     return *((npy_float64*) &output);
