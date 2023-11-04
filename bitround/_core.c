@@ -10,7 +10,6 @@
 const npy_int64 ONE = 1;
 const npy_int64 HEX_00100s = ONE << 52;
 const npy_int64 HEX_7FF00s = ((ONE << 11) - 1) << 52;
-const npy_int64 HEX_80000s = ONE << (64 - 1);
 const npy_int64 HEX_FFE00s = ((ONE << 11) - 1) << (52 + 1);
 const npy_int64 HEX_FFF00s = ((ONE << (1 + 11)) - 1) << 52;
 
@@ -25,9 +24,7 @@ inline npy_float64 npy_float64_bitround(npy_float64 a, npy_float64 d){
     npy_uint64 output;
     output = (dE > 0) * ((*p_a + (HEX_00100s >> dE)) & (HEX_FFE00s >> dE))
            + (dE == 0) * ((*p_a + HEX_00100s) & HEX_FFF00s)
-           + (dE < 0) * (*p_a & HEX_80000s);
-    output = ((E_a != HEX_7FF00s) && (dE < 64))  * output
-           + ((E_a == HEX_7FF00s) || (dE >= 64)) * *p_a;
+    output = (dE < 64) * output + (dE >= 64)* *p_a;
 
     return *((npy_float64*) &output);
 }
