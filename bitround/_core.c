@@ -27,8 +27,8 @@ inline npy_double npy_double_bitround(npy_double a, npy_double d){
     output = (dE > 0) * ((*p_a + (HEX_00100s >> dE)) & (HEX_FFE00s >> dE))
            + (dE == 0) * ((*p_a + HEX_00100s) & HEX_FFF00s)
            + (dE < 0) * (*p_a & HEX_80000s);
-    output = ((E_a != HEX_7FF00s) && (dE < 32))  * output
-           + ((E_a == HEX_7FF00s) || (dE >= 32)) * *p_a;
+    output = ((E_a != HEX_7FF00s) && (dE < 64))  * output
+           + ((E_a == HEX_7FF00s) || (dE >= 64)) * *p_a;
 
     return *((npy_double*) &output);
 }
