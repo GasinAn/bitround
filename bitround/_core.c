@@ -1,33 +1,16 @@
 #define PY_SSIZE_T_CLEAN
 #define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
 #include <Python.h>
+#include <math.h>
 #include "numpy/ndarraytypes.h"
 #include "numpy/ufuncobject.h"
 
 
 /*** npy_float64_bitround ***/
 
-const npy_int64 ONE = 1;
-const npy_int64 HEX_00100s = ONE << 52;
-const npy_int64 HEX_7FF00s = ((ONE << 11) - 1) << 52;
-const npy_int64 HEX_FFE00s = ((ONE << 11) - 1) << (52 + 1);
-const npy_int64 HEX_FFF00s = ((ONE << (1 + 11)) - 1) << 52;
-
 inline npy_float64 npy_float64_bitround(npy_float64 a, npy_float64 d){
-    npy_uint64* p_a = (npy_uint64*) &a;
-    npy_uint64* p_d = (npy_uint64*) &d;
-
-    npy_int64 E_a = *p_a & HEX_7FF00s;
-    npy_int64 E_d = *p_d & HEX_7FF00s;
-    npy_int64 dE = (E_a - E_d) >> 52;
-
-    npy_uint64 output;
-    output = *p_a + (HEX_00100s >> dE);
-    output = (dE > 0) * (output & (HEX_FFE00s >> dE))
-           + (dE == 0) * (output & HEX_FFF00s);
-    output = (dE < 64) * output + (dE >= 64)* *p_a;
-
-    return *((npy_float64*) &output);
+    npy_float64 exp2_n = exp2f64(ceilf64(log2f64(d)));
+    return ((a > 0) - (a < 0)) * roundf64(fabsf64(a) / exp2_n) * exp2_n;
 }
 
 
