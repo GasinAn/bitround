@@ -26,7 +26,7 @@ inline void npy_float64_bitround(char* a, char* d){
 
 /* The loop definition must precede the PyMODINIT_FUNC. */
 
-const char[] bitround_docstring = 
+const char bitround_docstring[] = 
 "\r\n";
 
 static void u_npy_float64_bitround(char **args,
