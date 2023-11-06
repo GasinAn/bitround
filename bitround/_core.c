@@ -50,7 +50,7 @@ static void u_npy_float64_bitround(char **args,
 
 PyUFuncGenericFunction funcs_bitround[1] = {&u_npy_float64_bitround};
 
-/* These are the input and output dtypes of bitround. */
+/* These are the input dtypes of bitround. */
 
 static char types_bitround[2] = {NPY_FLOAT64, NPY_FLOAT64};
 
