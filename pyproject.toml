@@ -1,3 +1,20 @@
 [build-system]
 requires = ['setuptools>=61.0.0', 'numpy>=1.7']
 build-backend = 'setuptools.build_meta'
+
+[project]
+name = 'bitround'
+version = '1.0.0'
+description = '"Bit round" for fast low-rate lossy compression'
+readme = {file = 'README.md', content-type = 'text/markdown'}
+requires-python = '>=3.0'
+license = {text = 'MIT License'}
+authors = [
+  {name = 'GasinAn', email = 'Gasin185@163.com'},
+]
+maintainers = [
+  {name = 'GasinAn', email = 'Gasin185@163.com'},
+]
+
+[project.urls]
+Repository = 'https://github.com/GasinAn/bitround.git'

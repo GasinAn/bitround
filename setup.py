@@ -2,16 +2,6 @@ import setuptools
 import numpy
 
 setuptools.setup(
-    name='bitround',
-    version='1.0.0',
-    description='"Bit round" for fast low-rate lossy compression',
-    author='GasinAn',
-    author_email='Gasin185@163.com',
-    maintainer='GasinAn',
-    maintainer_email='Gasin185@163.com',
-    url='https://github.com/GasinAn/bitround',
-    license='MIT',
-    python_requires='>=3.0',
     packages=['bitround'],
     package_dir={'bitround': 'bitround'},
     ext_modules=[
