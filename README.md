@@ -10,6 +10,8 @@
 
 ### Using pip
 
+For Linux x86_64 system users, the package can be installed by using pip:
+
 ```
 pip install bitround
 ```
