@@ -16,9 +16,9 @@ const npy_uint64 HEX_7FFFFs = (ONEu << 63) - 1u;
 
 inline void npy_float64_bitround(char* a, char* d){
     npy_int64 n = (*((npy_int64*) d) & HEX_7FF00s) - HEX_3FE00s;
-    *((npy_int64*) a) -= n;
+    *((npy_uint64*) a) -= n;
     *((npy_float64*) a) = roundevenf64(*((npy_float64*) a));
-    *((npy_int64*) a) += n * ((*((npy_uint64*) a) & HEX_7FFFFs) != 0u);
+    *((npy_uint64*) a) += n * ((*((npy_uint64*) a) & HEX_7FFFFs) != 0u);
 }
 
 
