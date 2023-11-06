@@ -26,6 +26,9 @@ inline void npy_float64_bitround(char* a, char* d){
 
 /* The loop definition must precede the PyMODINIT_FUNC. */
 
+const char[] bitround_docstring = 
+"\r\n";
+
 static void u_npy_float64_bitround(char **args,
                                    const npy_intp *dimensions,
                                    const npy_intp *steps,
@@ -86,7 +89,7 @@ PyMODINIT_FUNC PyInit__core(void)
 
     bitround = PyUFunc_FromFuncAndData(
         funcs_bitround, NULL, types_bitround, 1, 2, 0, PyUFunc_None,
-        "bitround", "bitround_docstring", 0
+        "bitround", bitround_docstring, 0
     );
 
     d = PyModule_GetDict(m);
