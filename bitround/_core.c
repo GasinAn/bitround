@@ -8,9 +8,15 @@
 
 /*** npy_float64_bitround ***/
 
-inline npy_float64 npy_float64_bitround(npy_float64 a, npy_float64 d){
-    npy_float64 exp2_n = exp2f64(ceilf64(log2f64(d)));
-    return ((a > 0) - (a < 0)) * roundf64(fabsf64(a) / exp2_n) * exp2_n;
+const npy_int64 ONE = 1;
+const npy_int64 HEX_3FE00s = ((ONE << 10) - 1 - 1) << 52;
+const npy_int64 HEX_7FF00s = ((ONE << 11) - 1) << 52;
+
+inline void npy_float64_bitround(char* a, char* d){
+    npy_int64 n = (*((npy_int64*) d) & HEX_7FF00s) - HEX_3FE00s;
+    *((npy_int64*) a) -= n;
+    *((npy_float64*) a) = roundf64(*((npy_float64*) a));
+    *((npy_int64*) a) += n * (*((npy_float64*) a) != 0);
 }
 
 
@@ -30,9 +36,7 @@ static void u_npy_float64_bitround(char **args,
 
     for (i = 0; i < n; i++) {
         /*BEGIN main ufunc computation*/
-        *((npy_float64 *)in1) = npy_float64_bitround(
-            *((npy_float64 *)in1), *((npy_float64 *)in2)
-        );
+        npy_float64_bitround(in1, in2);
         /*END main ufunc computation*/
 
         in1 += in1_step;
