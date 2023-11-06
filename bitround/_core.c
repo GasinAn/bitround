@@ -15,7 +15,7 @@ const npy_int64 HEX_7FF00s = ((ONE << 11) - 1) << 52;
 inline void npy_float64_bitround(char* a, char* d){
     npy_int64 n = (*((npy_int64*) d) & HEX_7FF00s) - HEX_3FE00s;
     *((npy_int64*) a) -= n;
-    *((npy_float64*) a) = roundf64(*((npy_float64*) a));
+    *((npy_float64*) a) = roundevenf64(*((npy_float64*) a));
     *((npy_int64*) a) += n * (*((npy_float64*) a) != 0);
 }
 
