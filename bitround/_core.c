@@ -9,10 +9,10 @@
 /*** npy_float64_bitround ***/
 
 const npy_int64 ONE = 1;
-const npy_int64 HEX_3FE00s = ((ONE << 10) - 1 - 1) << 52;
+const npy_int64 HEX_3FE00s = ((ONE << (11 - 1)) - 1 - 1) << 52;
 const npy_int64 HEX_7FF00s = ((ONE << 11) - 1) << 52;
 const npy_uint64 ONEu = 1u;
-const npy_uint64 HEX_7FFFFs = (ONEu << 63) - 1u;
+const npy_uint64 HEX_7FFFFs = (ONEu << (64 - 1)) - 1u;
 
 inline void npy_float64_bitround(char* a, char* d){
     npy_int64 n = (*((npy_int64*) d) & HEX_7FF00s) - HEX_3FE00s;
