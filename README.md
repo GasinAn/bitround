@@ -18,14 +18,6 @@ The behavior of `bitround.bitround` is UNDEFINED when it is one of following sit
 
 ## Installation
 
-### Using pip
-
-For Linux x86_64 system users, the package can be installed by using pip:
-
-```
-pip install bitround
-```
-
 ### Building from Source
 
 [build](https://pypa-build.readthedocs.io/en/stable/), [Numpy](https://numpy.org/), [Setuptools](https://setuptools.pypa.io/en/latest/) and a C compiler (such as [GCC](https://gcc.gnu.org/)) should be installed first.
