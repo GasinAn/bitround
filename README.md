@@ -4,7 +4,17 @@
 
 ## Overview
 
+The Numpy ufunc `bitround.bitround` makes "bit round" for float. It takes two input: $a$ and $d$. It modifies $a$ to $\text{sgn}(a)\,\text{round}(\text{abs}(a)/2^{n})\,2^{n}$, where $n = \text{floor}(\log_{2}(d))+1$. After "bit round", elements in $a$ will have more `0` tail bits. This makes `bitround.bitround` cooperate with [Bitshuffle](https://github.com/kiyo-masui/bitshuffle) compression well. It will makes the compression rate lower, while leaves loss of precision controlled by $d$.
 
+## Warning
+
+At this moment, `bitround.bitround` works only for float64.
+
+The behavior of `bitround.bitround` is UNDEFINED when it is one of following situations:
+
+ * $d$ is not positive normal number;
+ * $a$ is subnormal number;
+ * $\text{floor}(\log_{2}(a))-\text{floor}(\log_{2}(d))\leq1022$.
 
 ## Installation
 

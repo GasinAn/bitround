@@ -26,8 +26,21 @@ static inline void npy_float64_bitround(char* a, char* d){
 
 /* The loop definition must precede the PyMODINIT_FUNC. */
 
-const char bitround_docstring[] = 
-"\r\n";
+const char bitround_docstring[] =
+"float64 ndarray bitround(float64 ndarray a, float64 ndarray d)\r\n"
+"\r\n"
+"Modifies a to sign(a)round(abs(a)/2**n)2**n, where n == floor(log2(d))+1.\r\n"
+"\r\n"
+"Warning\r\n"
+"\r\n"
+"At this moment, function bitround works only for float64.\r\n"
+"\r\n"
+"The behavior of function bitround is UNDEFINED when it is one of following\r\n"
+"situations:\r\n"
+"\r\n"
+" * d is not positive normal number;\r\n"
+" * a is subnormal number;\r\n"
+" * floor(log2(a)) - floor(log2(d)) <= 1022.\r\n";
 
 static void u_npy_float64_bitround(char **args,
                                    const npy_intp *dimensions,
