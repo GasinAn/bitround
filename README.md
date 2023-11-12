@@ -25,7 +25,7 @@ The behavior of `bitround.bitround` is UNDEFINED when it is one of following sit
 ```
 git clone git@github.com:GasinAn/bitround.git
 cd bitround
-python -m build
+python -m build -n
 ```
 
 Then the package can be installed by using pip:
