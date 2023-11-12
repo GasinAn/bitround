@@ -8,11 +8,11 @@
 
 /*** npy_float64_bitround ***/
 
-const npy_int64 ONE = 1;
-const npy_int64 HEX_3FE00s = ((ONE << (11 - 1)) - 1 - 1) << 52;
-const npy_int64 HEX_7FF00s = ((ONE << 11) - 1) << 52;
-const npy_uint64 ONEu = 1u;
-const npy_uint64 HEX_7FFFFs = (ONEu << (64 - 1)) - 1u;
+static const npy_int64 ONE = 1;
+static const npy_int64 HEX_3FE00s = ((ONE << (11 - 1)) - 1 - 1) << 52;
+static const npy_int64 HEX_7FF00s = ((ONE << 11) - 1) << 52;
+static const npy_uint64 ONEu = 1u;
+static const npy_uint64 HEX_7FFFFs = (ONEu << (64 - 1)) - 1u;
 
 static inline void npy_float64_bitround(char* a, char* d){
     npy_int64 n = (*((npy_int64*) d) & HEX_7FF00s) - HEX_3FE00s;
@@ -26,7 +26,7 @@ static inline void npy_float64_bitround(char* a, char* d){
 
 /* The loop definition must precede the PyMODINIT_FUNC. */
 
-const char bitround_docstring[] =
+static const char bitround_docstring[] =
 "float64 ndarray bitround(float64 ndarray a, float64 ndarray d)\r\n"
 "\r\n"
 "Modifies a to sign(a)round(abs(a)/2**n)2**n, where n == floor(log2(d))+1.\r\n"
