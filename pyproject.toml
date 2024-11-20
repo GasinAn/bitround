@@ -10,10 +10,10 @@ readme = {file = 'README.md', content-type = 'text/markdown'}
 requires-python = '>=3.0'
 license = {text = 'MIT License'}
 authors = [
-  {name = 'GasinAn', email = 'Gasin185@163.com'},
+  {name = 'GasinAn', email = 'gasin185@163.com'},
 ]
 maintainers = [
-  {name = 'GasinAn', email = 'Gasin185@163.com'},
+  {name = 'GasinAn', email = 'gasin185@163.com'},
 ]
 
 [project.urls]
