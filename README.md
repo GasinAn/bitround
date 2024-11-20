@@ -23,7 +23,7 @@ The behavior of `bitround.bitround` is UNDEFINED when it is one of following sit
 [build](https://pypa-build.readthedocs.io/en/stable/), [Numpy](https://numpy.org/), [Setuptools](https://setuptools.pypa.io/en/latest/) and a C compiler (such as [GCC](https://gcc.gnu.org/)) should be installed first.
 
 ```
-git clone git@github.com:GasinAn/bitround.git
+git clone https://github.com/GasinAn/bitround.git
 cd bitround
 python -m build -n
 ```
