@@ -8,17 +8,16 @@
 
 /*** npy_float64_bitround ***/
 
-static const npy_int64 ONE = 1;
-static const npy_int64 HEX_3FE00s = ((ONE << (11 - 1)) - 1 - 1) << 52;
-static const npy_int64 HEX_7FF00s = ((ONE << 11) - 1) << 52;
-static const npy_uint64 ONEu = 1u;
-static const npy_uint64 HEX_7FFFFs = (ONEu << (64 - 1)) - 1u;
+static const npy_uint64 UINT64_1 = 1u;
+static const npy_int64 INT64_3FE0_0 = ((UINT64_1 << 9) - 1u) << 53;
+static const npy_int64 INT64_7FF0_0 = ((UINT64_1 << 11) - 1u) << 52;
+static const npy_uint64 UINT64_7FFF_F = (UINT64_1 << 63) - 1u;
 
 static inline void npy_float64_bitround(char* a, char* d){
-    npy_int64 n = (*((npy_int64*) d) & HEX_7FF00s) - HEX_3FE00s;
+    npy_int64 n = (*((npy_int64*) d) & INT64_7FF0_0) - INT64_3FE0_0;
     *((npy_uint64*) a) -= n;
     *((npy_float64*) a) = roundevenf64(*((npy_float64*) a));
-    *((npy_uint64*) a) += n * ((*((npy_uint64*) a) & HEX_7FFFFs) != 0u);
+    *((npy_uint64*) a) += n * ((*((npy_uint64*) a) & UINT64_7FFF_F) != 0u);
 }
 
 
