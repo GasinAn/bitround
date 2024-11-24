@@ -4,7 +4,7 @@ Bitwise rounding for fast low-rate lossy compression
 
 ## Overview
 
-The Numpy ufunc `bitwiseround.bitwise_round` makes bitwise rounding for float. It takes two input: $a$ and $d$. It modifies $a$ to $\text{sgn}(a)\,\text{round}(\text{abs}(a)/2^{n})\,2^{n}$, where $n = \text{floor}(\log_{2}(d))+1$. After bitwise rounding, elements in $a$ will have more `0` tail bits. This makes `bitwiseround.bitwise_round` cooperate with [Bitshuffle](https://github.com/kiyo-masui/bitshuffle) compression well. It will makes the compression rate lower, while leaves loss of precision controlled by $d$.
+The Numpy ufunc `bitwiseround.bitwise_round` makes bitwise rounding for float. It takes two input: $a$ and $d$. It modifies $a$ to $\text{sgn}(a) \cdot \text{round}(\text{abs}(a)/2^{n}) \cdot 2^{n}$, where $n = \text{floor}(\log_{2}(d)) + 1$. After bitwise rounding, elements in $a$ will have more `0` tail bits. This makes `bitwiseround.bitwise_round` cooperate with [Bitshuffle](https://github.com/kiyo-masui/bitshuffle) compression well. It will makes the compression rate lower, while leaves loss of precision controlled by $d$.
 
 ## Warning
 
@@ -14,13 +14,13 @@ The behavior of `bitwiseround.bitwise_round` is UNDEFINED when it is one of foll
 
  * $d$ is not positive normal number;
  * $a$ is subnormal number;
- * $\text{floor}(\log_{2}(a))-\text{floor}(\log_{2}(d))\leq1022$.
+ * $\text{floor}(\log_{2}(a)) - \text{floor}(\log_{2}(d)) \leq 1022$.
 
 ## Installation
 
 ### Building from Source
 
-[build](https://pypa-build.readthedocs.io/en/stable/), [Numpy](https://numpy.org/), [Setuptools](https://setuptools.pypa.io/en/latest/) and a C compiler (such as [GCC](https://gcc.gnu.org/)) should be installed first.
+[build](https://pypa-build.readthedocs.io/en/stable/), [Setuptools](https://setuptools.pypa.io/en/latest/), [Numpy](https://numpy.org/) and a C compiler (such as [GCC](https://gcc.gnu.org/)) should be installed first.
 
 ```
 git clone https://github.com/GasinAn/bitwiseround.git
