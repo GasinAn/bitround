@@ -2,7 +2,7 @@
 Bitwiseround
 ========
 
-Bitwise rounding for fast low-rate lossy compression
+Fast bitwise rounding for low-rate lossy compression
 
 Overview
 --------
