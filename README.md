@@ -1,16 +1,16 @@
-# Bitround
+# Bitwiseround
 
-"Bit round" for fast low-rate lossy compression
+Bitwise rounding for fast low-rate lossy compression
 
 ## Overview
 
-The Numpy ufunc `bitround.bitround` makes "bit round" for float. It takes two input: $a$ and $d$. It modifies $a$ to $\text{sgn}(a)\,\text{round}(\text{abs}(a)/2^{n})\,2^{n}$, where $n = \text{floor}(\log_{2}(d))+1$. After "bit round", elements in $a$ will have more `0` tail bits. This makes `bitround.bitround` cooperate with [Bitshuffle](https://github.com/kiyo-masui/bitshuffle) compression well. It will makes the compression rate lower, while leaves loss of precision controlled by $d$.
+The Numpy ufunc `bitwiseround.bitwise_round` makes bitwise rounding for float. It takes two input: $a$ and $d$. It modifies $a$ to $\text{sgn}(a)\,\text{round}(\text{abs}(a)/2^{n})\,2^{n}$, where $n = \text{floor}(\log_{2}(d))+1$. After bitwise rounding, elements in $a$ will have more `0` tail bits. This makes `bitwiseround.bitwise_round` cooperate with [Bitshuffle](https://github.com/kiyo-masui/bitshuffle) compression well. It will makes the compression rate lower, while leaves loss of precision controlled by $d$.
 
 ## Warning
 
-At this moment, `bitround.bitround` works only for float64.
+At this moment, `bitwiseround.bitwise_round` works only for float64.
 
-The behavior of `bitround.bitround` is UNDEFINED when it is one of following situations:
+The behavior of `bitwiseround.bitwise_round` is UNDEFINED when it is one of following situations:
 
  * $d$ is not positive normal number;
  * $a$ is subnormal number;
@@ -23,8 +23,8 @@ The behavior of `bitround.bitround` is UNDEFINED when it is one of following sit
 [build](https://pypa-build.readthedocs.io/en/stable/), [Numpy](https://numpy.org/), [Setuptools](https://setuptools.pypa.io/en/latest/) and a C compiler (such as [GCC](https://gcc.gnu.org/)) should be installed first.
 
 ```
-git clone https://github.com/GasinAn/bitround.git
-cd bitround
+git clone https://github.com/GasinAn/bitwiseround.git
+cd bitwiseround
 python -m build -n
 ```
 
@@ -41,7 +41,7 @@ import numpy
 import h5py
 import bitshuffle.h5
 
-from bitround import bitround
+from bitwiseround import bitwise_round
 
 file = h5py.File('example.hdf5', 'w')
 
@@ -56,8 +56,8 @@ dataset = file.create_dataset(
 data = numpy.random.rand(100, 100, 100)
 data = data.astype('float64')
 
-# Use bitround here!
-bitround(data, 0.333)
+# Use bitwise_round here!
+bitwise_round(data, 0.333)
 
 dataset[...] = data
 

@@ -27,7 +27,7 @@ situations:
  * floor(log2(a)) - floor(log2(d)) <= 1022.
 """
 
-from ._core import bitround
+from ._core import bitwise_round
 from ._test import test
 
-__all__ = ['bitround', 'test']
+__all__ = ['bitwise_round', 'test']

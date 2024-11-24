@@ -3,9 +3,9 @@ requires = ['setuptools>=61.0.0', 'numpy>=1.7']
 build-backend = 'setuptools.build_meta'
 
 [project]
-name = 'bitround'
-version = '1.0.1'
-description = '"Bit round" for fast low-rate lossy compression'
+name = 'bitwiseround'
+version = '2.0.0'
+description = 'Bitwise rounding for fast low-rate lossy compression'
 readme = {file = 'README.md', content-type = 'text/markdown'}
 requires-python = '>=3.0'
 license = {text = 'MIT License'}
@@ -17,4 +17,4 @@ maintainers = [
 ]
 
 [project.urls]
-Repository = 'https://github.com/GasinAn/bitround.git'
+Repository = 'https://github.com/GasinAn/bitwiseround.git'
