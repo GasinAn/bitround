@@ -34,6 +34,8 @@ Then the package can be installed by using pip:
 pip install dist/*.whl
 ```
 
+Now LEAVE the `bitwiseround` directory to use Bitwiseround.
+
 ## Example
 
 ```python
