@@ -35,4 +35,4 @@ def test():
     bitwise_round(a, d)
     assert np.all(a == _a) and np.all(np.signbit(a) == np.signbit(_a))
 
-    print("Testing passed")
+    print("Test passed")
