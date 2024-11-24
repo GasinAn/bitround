@@ -28,18 +28,19 @@ static inline void npy_float64_bitwise_round(char* a, char* d){
 static const char bitwise_round_docstring[] =
 "float64 ndarray bitwise_round(float64 ndarray a, float64 ndarray d)\r\n"
 "\r\n"
-"Modifies a to sign(a)round(abs(a)/2**n)2**n, where n == floor(log2(d))+1.\r\n"
+"Modifies `a` to ``sign(a) * round(abs(a)/2**n) * 2**n``, where ``n ==\r\n"
+"floor(log2(d)) + 1``.\r\n"
 "\r\n"
 "Warning\r\n"
 "\r\n"
-"At this moment, function bitwise_round works only for float64.\r\n"
+"At this moment, function `bitwise_round` works only for float64s.\r\n"
 "\r\n"
-"The behavior of function bitwise_round is UNDEFINED when it is one of following\r\n"
-"situations:\r\n"
+"The behavior of function `bitwise_round` is UNDEFINED when one of the\r\n"
+"following situations holds\r\n"
 "\r\n"
-" * d is not positive normal number;\r\n"
-" * a is subnormal number;\r\n"
-" * floor(log2(a)) - floor(log2(d)) <= 1022.\r\n";
+" * `d` is not a positive normal number;\r\n"
+" * `a` is a subnormal number;\r\n"
+" * ``floor(log2(a)) - floor(log2(d)) <= 1022``.\r\n";
 
 static void u_npy_float64_bitwise_round(char **args,
                                         const npy_intp *dimensions,

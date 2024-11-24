@@ -1,30 +1,31 @@
 """
-Bitround
+Bitwiseround
 ========
 
-"Bit round" for fast low-rate lossy compression
+Bitwise rounding for fast low-rate lossy compression
 
 Overview
 --------
 
-The Numpy ufunc bitround.bitround makes "bit round" for float. It takes two
-input: a and d. It modifies a to sign(a)round(abs(a)/2**n)2**n, where n == floor
-(log2(d))+1. After "bit round", elements in a will have more 0 tail bits. This
-makes bitround.bitround cooperate with Bitshuffle compression well. It will
-makes the compression rate lower, while leaves loss of precision controlled by
-d.
+The Numpy ufunc `bitwiseround.bitwise_round` makes bitwise rounding for floats.
+It takes two inputs: `a` and `d`. It modifies `a` to ``sign(a) * round(abs(a)/
+2**n) * 2**n``, where ``n == floor(log2(d)) + 1``. After bitwise rounding,
+elements in `a` will have more bits with the value of 0 at the ends. This makes
+`bitwiseround.bitwise_round` cooperate with Bitshuffle compression compression
+well. It will make the compression rate lower, while leading to a loss of
+precision controlled by `d`.
 
 Warning
 -------
 
-At this moment, bitround.bitround works only for float64.
+At this moment, `bitwiseround.bitwise_round` works only for float64s.
 
-The behavior of bitround.bitround is UNDEFINED when it is one of following
-situations:
+The behavior of `bitwiseround.bitwise_round` is UNDEFINED when one of the
+following situations holds:
 
- * d is not positive normal number;
- * a is subnormal number;
- * floor(log2(a)) - floor(log2(d)) <= 1022.
+ * `d` is not a positive normal number;
+ * `a` is a subnormal number;
+ * ``floor(log2(a)) - floor(log2(d)) <= 1022``.
 """
 
 from ._core import bitwise_round
