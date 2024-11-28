@@ -31,8 +31,8 @@ def test():
     bitwise_round(a, d)
     assert np.all(np.isnan(a)) and np.all(np.signbit(a) == np.array([1, 0]))
 
-    a = np.logspace(-64, +64, 3**12, base=2)
-    d = np.exp2(np.random.uniform(-1, 1))
+    a = np.exp2(np.random.uniform(-64, +64, size=3**12))
+    d = np.exp2(np.random.uniform(-1, +1, size=3**12))
     _a = _bitwise_round(a, d)
     bitwise_round(a, d)
     assert np.all(a == _a) and np.all(np.signbit(a) == np.signbit(_a))
