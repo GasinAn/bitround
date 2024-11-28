@@ -1,6 +1,7 @@
 from ._core import bitwise_round
 import numpy as np
 
+
 @np.vectorize
 def _bitwise_round(a, d):
     """A function which should be equivalent to bitwiseround.bitwise_round"""
@@ -10,6 +11,7 @@ def _bitwise_round(a, d):
         return np.sign(a)*np.round(np.abs(a)/exp2_n)*exp2_n
     else:
         return a
+
 
 def test():
     """Test for bitwiseround.bitwise_round"""
@@ -29,7 +31,7 @@ def test():
     bitwise_round(a, d)
     assert np.all(np.isnan(a)) and np.all(np.signbit(a) == np.array([1, 0]))
 
-    a = np.logspace(-64, +64, 1000001, base=2)
+    a = np.logspace(-64, +64, 3**12, base=2)
     d = np.exp2(np.random.uniform(-1, 1))
     _a = _bitwise_round(a, d)
     bitwise_round(a, d)
